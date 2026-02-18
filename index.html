@@ -610,7 +610,9 @@
       error.classList.remove('show');
 
       try {
-        const response = await fetch(`/api/convert?url=${encodeURIComponent(url)}`);
+        // corsproxy.io works for browser requests (blocks server-side only)
+        const apiUrl = `https://api.song.link/v1-alpha.1/links?url=${encodeURIComponent(url)}`;
+        const response = await fetch(`https://corsproxy.io/?${encodeURIComponent(apiUrl)}`);
         
         if (!response.ok) {
           throw new Error('Could not find this track. Try a different link.');
